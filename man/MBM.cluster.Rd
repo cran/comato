@@ -1,0 +1,46 @@
+\name{MBM.cluster}
+\alias{MBM.cluster}
+\title{MBMM clustering}
+\usage{
+MBM.cluster(data, min = 1, max = 10)
+}
+\arguments{
+  \item{data}{A numeric matrix.}
+
+  \item{min}{The minimal number of components that is
+  tested.}
+
+  \item{max}{The maximal number of components that is
+  tested.}
+}
+\value{
+A list with 3 elements. The first element is the minimal
+AIC value for each tested number of components. The second
+element is a vector of all AIC values. The third is the
+actual clustering as returned by the EM algorithm using the
+optimal number of components according to AIC. The element
+is again a list that contains the mixture coefficients, the
+actual parameters of the mutlivariate Benroulli
+distributions, the probability matrix of each observation
+(i.e. row if \code{data}) and component and the number of
+iterations that the EM algorithm needed to converge.
+}
+\description{
+\code{MBM.cluster} calculates a model based clustering
+using multivariate Bernoulli-mixtures as probabilistic
+model of the data. The quality of the clustering is judged
+using the AIC criterion.
+}
+\examples{
+#Random data generation, 100 observations, 5 dimensions, dependencies within the dimensions
+data = cbind(round(runif(100)), round(runif(100)), round(runif(100)))
+data = cbind(data, data[,2], 1-data[,3])
+
+#Noisy data:
+s = round(runif(2, 1, 100))
+data[s, c(4,5)] = 1 - data[s, c(4,5)]
+
+#MBMM Clustering
+res = MBM.cluster(data, 1,8)
+}
+

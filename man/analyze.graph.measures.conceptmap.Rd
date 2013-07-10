@@ -1,0 +1,27 @@
+\name{analyze.graph.measures.conceptmap}
+\alias{analyze.graph.measures.conceptmap}
+\title{Analyzing graph measures of a concept map}
+\usage{
+\method{analyze.graph.measures}{conceptmap}(x)
+}
+\arguments{
+  \item{x}{A conceptmap object.}
+}
+\value{
+A list with named components that contain the betweenness
+measure, the edge.connectivity, the diameter, the degree
+distribution and the communities using the Fastgreedy
+algorithm.
+}
+\description{
+\code{analyze.graph.measures} analyzes several basic graph
+measures of a given graph in form of a conceptmap object.
+All measures are derived by the appropriate functions of
+igraph.
+}
+\examples{
+require("igraph")
+g1 = set.vertex.attribute(erdos.renyi.game(15, 0.7, type="gnp"), "name", value=1:15)
+analyze.graph.measures(conceptmap(g1))
+}
+

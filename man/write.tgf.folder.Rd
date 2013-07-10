@@ -1,0 +1,40 @@
+\name{write.tgf.folder}
+\alias{write.tgf.folder}
+\title{Saving a set of concept maps to TGF files}
+\usage{
+write.tgf.folder(maps, folder, translation = NULL)
+}
+\arguments{
+  \item{maps}{A conceptmap object.}
+
+  \item{folder}{The location where the files should be
+  stored. The folder is created, if necessary.}
+
+  \item{translation}{See \code{\link{write.tgf}}.}
+}
+\value{
+-
+}
+\description{
+\code{write.tgf.folder} stores the graphs underlying the
+maps of a conceptmaps object into a folder using the
+"Trivial Grpah Format" (TGF). The function calls
+\code{\link{write.tgf}} for each of the maps of a
+conceptmaps object. The files will be named "1.tgf",
+"2.tgf" and so on.
+}
+\examples{
+\dontrun{
+#Create concept maps from three random graphs
+require("igraph")
+g1 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+g2 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+g3 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+
+#Create conceptmaps object from three conceptmap objects
+simple_cms = conceptmaps(list(conceptmap(g1), conceptmap(g2), conceptmap(g3)))
+
+write.tgf.folder(simple_cms, "~/cmaps")
+}
+}
+

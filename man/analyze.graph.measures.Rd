@@ -1,0 +1,19 @@
+\name{analyze.graph.measures}
+\alias{analyze.graph.measures}
+\title{Analyze graph measures of a concept map}
+\usage{
+analyze.graph.measures(x)
+}
+\arguments{
+  \item{x}{A conceptmap.}
+}
+\value{
+A list of several graph measures.
+}
+\description{
+\code{analyze.graph.measures} analyzes several graph
+measures. For actual implementations see
+\code{\link{analyze.graph.measures.conceptmap}}, or
+\code{\link{analyze.graph.measures.igraph}}.
+}
+

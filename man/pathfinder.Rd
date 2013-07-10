@@ -1,0 +1,26 @@
+\name{pathfinder}
+\alias{pathfinder}
+\title{Construct a Pathfinder network from a conceptmap or a concept landscape}
+\usage{
+pathfinder(data, q, r, ...)
+}
+\arguments{
+  \item{data}{The input data.}
+
+  \item{q}{The q parameter of the Pathfinder algorithm.}
+
+  \item{r}{The r parameter of the Pathfinder algorithm.}
+
+  \item{...}{-}
+}
+\value{
+The Pathfinder network of the input data.
+}
+\description{
+\code{pathfinder} creates Pathfinder network. For more
+information and actual implementations see
+\code{\link{pathfinder.matrix}},
+\code{\link{pathfinder.conceptmaps}}, or
+\code{\link{pathfinder.igraph}}.
+}
+

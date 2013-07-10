@@ -1,0 +1,39 @@
+\name{clustering}
+\alias{clustering}
+\title{Clustering maps of a conceptmaps object}
+\usage{
+clustering(maps, method = c("MBMM", "PAM"), min = 1, max = 10)
+}
+\arguments{
+  \item{maps}{A conceptmaps object.}
+
+  \item{method}{Either "PAM" or "MBMM", indicating which
+  algorithm should be used.}
+
+  \item{min}{The minimal number of components that is
+  tested. For the PAM algorithm, 1 is not allowed.}
+
+  \item{max}{The maximal number of components that is
+  tested.}
+}
+\value{
+The return value of either \code{\link{MBM.cluster}} or
+\code{\link{PAM.cluster}}, depending on the value of
+\code{method}.
+}
+\description{
+\code{clustering} is a convenience function that implements
+two frequently used ways of clustering conceptmaps
+directly. The first is clustering using the MBMM algorithm
+and the concept matrix, the second is clustering using the
+PAM algorithm and the graph similarity matrix.
+}
+\examples{
+\dontrun{
+#Assuming that there are concept maps in folder "~/maps"
+cms = read.folder.tgf("~/maps")
+
+clustering(cms, method="MBMM")
+}
+}
+

@@ -1,0 +1,35 @@
+\name{unify.concepts}
+\alias{unify.concepts}
+\title{Unifying the concepts of a conceptmap object.}
+\usage{
+unify.concepts(maps)
+}
+\arguments{
+  \item{maps}{A conceptmaps object.}
+}
+\value{
+A conceptmaps object in of the same map of \code{maps}, in
+which every map shares the same concepts.
+}
+\description{
+\code{unify.concepts} first calls
+\code{\link{get.unified.concepts}} on the maps of a
+conceptmaps object and then calls
+\code{\link{modify.concepts.conceptmaps}} on each of the
+constituent maps. Afterwards, therefore, each map of the
+conceptmaps object will share the same common superset of
+concepts.
+}
+\examples{
+data = rbind(
+ cbind("1", "Object", "Class", "is instance of"),
+ cbind("1", "Object", "Attribute", "has"),
+ cbind("2", "Class", "Attribute", "possesses"),
+ cbind("2", "Attribute", "Data-type", "has"),
+ cbind("3", "Object", "Class", "is instance of")
+ )
+ cms = conceptmaps(data)
+
+ unify.concepts(cms)
+}
+

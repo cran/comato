@@ -1,0 +1,71 @@
+\name{landscape}
+\alias{landscape}
+\title{Aggregating the maps of a conceptmaps object into a concept landscape}
+\usage{
+landscape(maps, result = c("graph", "matrix"), mode, FUN = NULL)
+}
+\arguments{
+  \item{maps}{A conceptmaps object.}
+
+  \item{result}{Either "graph" or "matrix" defines the
+  return type and the method of aggregation. An
+  amalgamation results in a weighted graph and an
+  accumulation results a matrix.}
+
+  \item{mode}{If \code{result} is "graph", it can be either
+  "directed" or "undirected" deciding how the graph should
+  be formed. First, a weight matrix is formed from the set
+  of concept maps. If \code{FUN} is NULL, the weights
+  simply reflect the number of maps in which a given edge
+  is present. Otherwise, \code{FUN} must be a function that
+  accepts three parameters and returns a numeric value. For
+  the first parameter the current conceptmap object will be
+  passed and for the second and third parameters the start
+  and end concepts of an edge is passed. The return value
+  of the function will then be added to the weight matrix.
+  If \code{result} is "matrix", it can be one of
+  "graph.sim", "concept.vector", "edge.vector" or "custom".
+  "graph.sim" return the graph similarity matrix,
+  "concept.vector" and "edge.vector" return the concept
+  matrix or edge matrix respectively. Finally, "custom" can
+  be used for arbitrary transformations: For each map, the
+  function passed to \code{FUN} and the resulting vector is
+  forming a row of the returned matrix.}
+
+  \item{FUN}{If \code{result} is "matrix" and \code{mode}
+  is "custom", a function with one parameter of type
+  conecptmap must be given that is called for each of the
+  consituent maps. The function must return a numeric
+  vector of equal length for all maps of a conceptmaps
+  object.}
+}
+\value{
+Depending on \code{result} either an igraph object or a
+numeric matrix.
+}
+\description{
+\code{landscape} transforms a set of concept maps into a
+concept landscape using one of several possible methods.
+Depending on the value of \code{result} and accumulation or
+amalgamation is performed on the concept map data. The
+amalgamation forms a weighted graph based on the unified
+set of concepts. An accumulation transforms each concept
+map into a vector and returns a matrix of these vectors.
+Using \code{FUN} the process of transformation can be
+influenced in both cases.
+}
+\examples{
+#Create concept maps from three random graphs
+require("igraph")
+g1 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+g2 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+g3 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+
+#Create conceptmaps object from three conceptmap objects
+cms = conceptmaps(list(conceptmap(g1), conceptmap(g2), conceptmap(g3)))
+
+landscape(cms, result="graph", mode="undirected")
+
+landscape(cms, result="matrix", mode="concept.vector")
+}
+

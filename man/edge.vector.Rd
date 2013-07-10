@@ -1,0 +1,28 @@
+\name{edge.vector}
+\alias{edge.vector}
+\title{Forming the edge vector of a conceptmap object}
+\usage{
+edge.vector(x)
+}
+\arguments{
+  \item{x}{A conceptmap object.}
+}
+\value{
+A numeric vector. The columns are named after the
+concept-pairs which are sorted alphabetically.
+}
+\description{
+\code{edge.vector} transforms a concept map into a numeric
+vector that contains for each occuring pair of concepts
+whether or not this pair is connected by a proposition in
+the concept map.
+}
+\examples{
+#Create concept map from a random graph
+require("igraph")
+g1 = set.vertex.attribute(erdos.renyi.game(5, 0.7, type="gnp"), "name", value=1:5)
+cm = conceptmap(g1)
+
+edge.vector(cm)
+}
+

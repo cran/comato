@@ -1,0 +1,24 @@
+\name{conceptmap.default}
+\alias{conceptmap.default}
+\title{Basic creation of a conceptmap object}
+\usage{
+\method{conceptmap}{default}(x, ...)
+}
+\arguments{
+  \item{x}{The concept map data. For NULL, an empty concept
+  map is created, otherwise the object is cooerced into a
+  matrix.}
+
+  \item{...}{-}
+}
+\value{
+A conceptmap object.
+}
+\description{
+\code{conceptmap} creates a conceptmap object based on
+either an empty concept map or on (matrix) data.
+}
+\examples{
+empty_cm = conceptmap(NULL)
+}
+

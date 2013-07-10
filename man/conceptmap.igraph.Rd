@@ -1,0 +1,32 @@
+\name{conceptmap.igraph}
+\alias{conceptmap.igraph}
+\title{Creation of a conceptmap object from an existing graph}
+\usage{
+\method{conceptmap}{igraph}(x, strip = TRUE, ...)
+}
+\arguments{
+  \item{x}{An igraph object. It must have an attribute
+  called "name" for both vertices and edges. Additional
+  attributes are preserved for graph, vertices and edges.}
+
+  \item{strip}{If TRUE, nodes without adjacent edges are
+  removed from the graph / concept map.}
+
+  \item{...}{-}
+}
+\value{
+A conceptmap object.
+}
+\description{
+\code{conceptmap} takes an existing igraph object and tries
+of coerce it into a conceptmap object (encompassing the
+igraph object).
+}
+\examples{
+#Create conceptmap from a complete graph with 5 nodes
+require("igraph")
+graph = graph.full(5)
+graph = set.vertex.attribute(graph, "name", value=1:5)
+simple_cm = conceptmap(graph)
+}
+

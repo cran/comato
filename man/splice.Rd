@@ -1,0 +1,34 @@
+\name{splice}
+\alias{splice}
+\title{Select a subset of a set of conceptmaps}
+\usage{
+splice(maps, keep)
+}
+\arguments{
+  \item{maps}{A conceptmaps object.}
+
+  \item{keep}{A numeric vector containing the indices of
+  the maps in \code{maps} that should be retained in the
+  subset. Regular R list indexing is used.}
+}
+\value{
+A conceptmaps object that consist of the maps with indiced
+of \code{maps}.
+}
+\description{
+\code{splice} selects a subset of a set of concept maps and
+returns them as a new conceptmaps object.
+}
+\examples{
+data = rbind(
+ cbind("1", "Object", "Class", "is instance of"),
+ cbind("1", "Object", "Attribute", "has"),
+ cbind("2", "Class", "Attribute", "possesses"),
+ cbind("2", "Attribute", "Data-type", "has"),
+ cbind("3", "Object", "Class", "is instance of")
+ )
+ cms = conceptmaps(data)
+
+ splice(cms, c(1,3))
+}
+

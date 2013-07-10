@@ -1,0 +1,25 @@
+\name{conceptmaps.default}
+\alias{conceptmaps.default}
+\title{Basic creation of a conceptmaps object}
+\usage{
+\method{conceptmaps}{default}(x, ...)
+}
+\arguments{
+  \item{x}{The set of concept maps. For NULL, an empty set
+  of concept maps is created, otherwise the object is
+  cooerced into a list.}
+
+  \item{...}{-}
+}
+\value{
+A conceptmaps object.
+}
+\description{
+\code{conceptmaps} creates a conceptmaps object based on
+either an empty set of concept map or on a list of concept
+maps.
+}
+\examples{
+empty_cms = conceptmaps(NULL)
+}
+

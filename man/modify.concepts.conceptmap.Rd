@@ -1,0 +1,33 @@
+\name{modify.concepts.conceptmap}
+\alias{modify.concepts.conceptmap}
+\title{Adapt list of concepts of a conceptmap object}
+\usage{
+\method{modify.concepts}{conceptmap}(x, concept.list, ...)
+}
+\arguments{
+  \item{x}{A conceptmap object.}
+
+  \item{concept.list}{A vector of strings that contains the
+  list of concepts.}
+
+  \item{...}{-}
+}
+\value{
+A conceptmap object that encompasses exactly the concepts
+of \code{concept.list}. Concepts not originally in
+\code{map} are added as isolated nodes/concepts. Concepts
+of \code{map} that are not in \code{concept.list} are
+removed together with their adjacent propositions.
+}
+\description{
+\code{modify.concepts} modifes the list of concepts
+according to a given list. This includes removing concepts
+and adjacent propositions as well as adding (unconnected)
+concepts.
+}
+\examples{
+data = rbind(cbind("Object", "Class", "is instance of"), cbind("Class", "Attribute", "has"))
+cm = conceptmap(data)
+modify.concepts(cm, c("Object", "Class", "Method"))
+}
+
