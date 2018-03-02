@@ -74,6 +74,7 @@ pathfinder.matrix <- function(data, q, r, ...)
 #' @param r The parameter r used in the Pathfinder algorithm for the r-metric.
 #' @param threshold A numeric value used for pruning the graph before the Pathfinder algorithm. The pruning works in conjunction with
 #' the value of \code{prune.edges}.
+#' @param directed if TRUE, the direction of the edges will be kept and the resulting Pathfinder network will be directed as well.
 #' @param prune.edges If TRUE, each entry of the weight matrix that is lower than \code{threshold} will be set to 0 and columns
 #' with a resulting sum of 0 are removed. If FALSE, only columns of the weight matrix with a sum of less than \code{threshold} 
 #' will be removed.
@@ -96,7 +97,7 @@ pathfinder.matrix <- function(data, q, r, ...)
 #' cm = pathfinder(simple_cms, q=1, return.cm=TRUE)
 #' @method pathfinder conceptmaps
 #'@export
-pathfinder.conceptmaps <- function(data, q=Inf, r=1, threshold=0, prune.edges=F, return.cm=F, filename="", ...)
+pathfinder.conceptmaps <- function(data, q=2, r=1, threshold=0, directed=F, prune.edges=F, return.cm=F, filename="", ...) 
 {
   concepts = get.unified.concepts(data)
   mat = matrix(0, nrow=length(concepts), ncol=length(concepts), dimnames=list(concepts, concepts))
@@ -105,9 +106,11 @@ pathfinder.conceptmaps <- function(data, q=Inf, r=1, threshold=0, prune.edges=F,
     res = get.edgelist(data$maps[[m]]$map)
     if (dim(res)[1] > 0)
       for (i in 1:dim(res)[1])
-        mat[which(concepts == res[i, 1]), which(concepts == res[i, 2])] = mat[which(concepts == res[i, 1]), which(concepts == res[i, 2])] + 1
+        mat[res[i, 1], res[i, 2]] = mat[res[i, 1], res[i, 2]] + 1  #Klappt das? (Vorher: which(concepts == res[i, 1]), ...)
   }
-  mat = mat + t(mat)
+  
+  if (!directed)
+    mat = mat + t(mat) 
   
   keep = which(colSums(mat) > threshold)
   if (prune.edges)
@@ -119,6 +122,13 @@ pathfinder.conceptmaps <- function(data, q=Inf, r=1, threshold=0, prune.edges=F,
   mat = mat[keep, keep]
   
   mat = data$count + 1 - mat
+  
+  #Bugfix?!
+  mat[which(mat == data$count + 1)] = Inf
+  d = diag(mat)
+  d[which(d == Inf)] = 0
+  diag(mat) = d          #Was passiert bei Loops?
+  
   res = pathfinder(mat, min(q, dim(mat)[1]-1), r)
   res[which(res == Inf)] = 0
   
@@ -172,10 +182,10 @@ pathfinder.conceptmaps <- function(data, q=Inf, r=1, threshold=0, prune.edges=F,
 #' pathfinder(landscape(simple_cms, result="graph", mode="undirected"))
 #' @method pathfinder igraph
 #'@export
-pathfinder.igraph <- function(data, q=Inf, r=1, threshold=0, prune.edges=F, filename="", ...)
+pathfinder.igraph <- function(data, q=2, r=1, threshold=0, prune.edges=F, filename="", ...)
 {
   mat = get.adjacency(as.undirected(data, mode="collapse"), type="both")  
-  keep = which(colSums(mat) > threshold)
+  keep = which(colSums(mat) > threshold)        #Hier werden unverbundene Knoten entfernt...?
   if (prune.edges)
   {
     mat[which(mat < threshold)] = 0
@@ -183,6 +193,12 @@ pathfinder.igraph <- function(data, q=Inf, r=1, threshold=0, prune.edges=F, file
   }
   
   mat = mat[keep, keep]
+  
+  #Bugfix?!
+  mat[which(mat == 0)] = Inf
+  d = diag(mat)
+  d[which(d == Inf)] = 0
+  diag(mat) = d          #Was passiert bei Loops?
   
   res = pathfinder(as.matrix(mat), min(q, dim(mat)[1]-1), r)
   res[which(res == Inf)] = 0

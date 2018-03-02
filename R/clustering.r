@@ -23,6 +23,7 @@
 #' Hopkins.index(data)
 #' }
 #'@export
+#'@importFrom stats runif
 Hopkins.index <- function(data)
 {
   n = round(0.05*dim(data)[1])

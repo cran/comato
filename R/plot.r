@@ -1,3 +1,6 @@
+#'@importFrom stats optim dist
+#'@importFrom graphics par plot
+
 min.distance <- function(centers, com, layouts)
 {
   centers = matrix(centers, ncol=2)
